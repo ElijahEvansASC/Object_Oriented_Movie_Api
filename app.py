@@ -1,12 +1,26 @@
+from Classes import gvars
+from flask import Flask, jsonify, request, json
+
 #To Run the Server:
 # 1.) Start debugging app.py
-# 2.) Navigate to http://127.0.0.1:5000
-
-import json
-from flask import Flask, jsonify, request
+# 2.) Navigate to http://127.0.0.1:5000 for the base URL
 
 app = Flask(__name__)
 
+#Declaring gvars class to be passed around the program
+g_vars = gvars.GVars() 
+#Declaring database connection string using pymongo
+database = g_vars.connect_to_mongo_db(g_vars.db_name, g_vars.connection_string)
+
+#Base URL view app route
+@app.route('/')
+def hello():
+    return 'Hello, World!'
+
+#Defines and stores data from tables in database
+
+#TVShows = facade method to get connection string
+#Movies = Facade method to get connection string
 employees = [
     { 'id': 1, 'name': 'Ashley' },
     { 'id': 2, 'name': 'Kate' },
@@ -72,5 +86,6 @@ def delete_employee(id: int):
     employees = [e for e in employees if e['id'] != id]
     return jsonify(employee), 200
 
+#Method to run the app in debug mode
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=105)
+    app.run(debug=True)
