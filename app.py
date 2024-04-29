@@ -1,6 +1,6 @@
 from __future__ import annotations
 from Classes import gvars
-from flask import Flask, jsonify, current_app, request, json
+from flask import Flask, current_app, render_template, g
 
 
 #To Run the Server:
@@ -12,9 +12,17 @@ app = Flask(__name__)
 #Declaring gvars class to be passed around the program
 g_vars = gvars.GVars() 
 
-#Declaring database connection string using pymongo
-with app.app_context():
-    current_app.database = g_vars.connect_to_mongo_db(g_vars.db_name, g_vars.connection_string)
+#Declaring database connection before request
+#g is a built in global variable import for Flask
+@app.before_request
+def before_request():
+    g.database = g_vars.connect_to_mongo_db()
+
+@app.teardown_request
+def teardown_request(exception):
+    database = getattr(g, 'database', None)
+    if database is not None:
+        database.client.close()
 
 #Base URL view app route
 @app.route('/')
@@ -24,9 +32,10 @@ def hello():
 #Movie data app route
 @app.route('/movie_data')
 def get_movie_data():
-    db = current_app.database
-    movie_data = db.collection_name.find()
-    return jsonify(list(movie_data))
+    database = getattr(g, 'database', None)
+    collection = database[g_vars.collection_name]
+    movie_data = collection.find()
+    return render_template('movie_data.html', movie_date = movie_data)
 
 
 #Method to run the app in debug mode
