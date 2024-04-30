@@ -1,33 +1,36 @@
-from Tools import *
-from Classes.process_queries import *
 from flask import Flask, render_template
+from Tools import Tools  # Importing the entire Tools module
 
-
-#To Run the Server:
-# 1.) Start debugging app.py
-# 2.) Navigate to http://127.0.0.1:5000 for the base URL
-
-#Flask application
+# Flask application
 app = Flask(__name__)
 
-
-
-
-
-    
-#Base URL view app route
+# Base URL view app route
 @app.route('/')
 def hello():
     return 'Hello, World!'
     
-#Movie data app routes
 @app.route('/popular_movie_data')
 def get_popular_movie_data():
-    process_popular_movies_query = ProcessPopularMovies()
-    context_popular_movies_query = Context(process_popular_movies_query)
+    popular_movies = Tools.process_popular_movie_query()
+    return render_template('popular_movie_data.html', popular_movies=popular_movies)
 
-    popular_movies = context_popular_movies_query.process_query('popular_movies')
-    return render_template('popular_movie_data.html', popular_movies = popular_movies)
+@app.route('/top_rated_movie_data')
+def get_top_rated_movie_data():
+    top_rated_movies = Tools.process_top_rated_movie_query()
+    return render_template('top_rated_movie_data.html', top_rated_movies=top_rated_movies)
+
+# Method to run the app in debug mode
+if __name__ == '__main__':
+    app.run(debug=True)
+    
+#Movie data app routes
+#@app.route('/popular_movie_data')
+#def get_popular_movie_data():
+    #process_popular_movies_query = ProcessPopularMovies()
+    #context_popular_movies_query = Context(process_popular_movies_query)
+
+    #popular_movies = context_popular_movies_query.process_query('popular_movies')
+    #return render_template('popular_movie_data.html', popular_movies = popular_movies)
 
 #@app.route('/top_rated_movie_data')
 #def get_top_rated_movie_data():
