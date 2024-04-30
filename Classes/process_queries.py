@@ -1,10 +1,14 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
-from Classes.create_and_query_endpoints import Facade
+from Classes.create_and_query_endpoints import *
 from Tools import *
 import json
 
-facade = Facade(api_key='e41e13373c979e318ae4ca2804ec7e2a', base_url = 'https://api.themoviedb.org/3')
+connection_string = "mongodb://student:alfred@10.33.86.229:27017"
+dbname = "MovieDatabase"
+collectionname = "Movies"
+
+movie_db = DBFacade(connection_string, dbname, collectionname)
 
 class Context():
 
@@ -49,9 +53,8 @@ class Strategy(ABC):
 
 class ProcessPopularMovies(Strategy):
     def process_popular_movies_query(self):
-        tmdb_response_text = facade.get_popular_movies()
-        tmdb_response = json.loads(tmdb_response_text)
-        return Tools.create_movie_listing(tmdb_response)
+        popular_movie_response = movie_db.get_popular_movies()
+        return Tools.create_movie_listing(popular_movie_response)
 
 
     #Stub methods had to be implemented in each class to fulfill inheriting from the Strategy class.
@@ -63,7 +66,7 @@ class ProcessPopularMovies(Strategy):
 
 class ProcessTopRatedMovies(Strategy):
     def process_top_rated_movies_query(self):
-        tmdb_response_text = facade.get_top_rated_movies()
+        tmdb_response_text = ""
         tmdb_response = json.loads(tmdb_response_text)
         return Tools.create_movie_listing(tmdb_response)
 
