@@ -19,20 +19,3 @@ class Tools:
             movie_list.append(movie)
         return movie_list
     
-    @staticmethod
-    def process_popular_movie_query():
-        # Connect to MongoDB and fetch popular movies
-        client = MongoClient("mongodb://student:alfred@10.33.86.229:27017")
-        db = client.MovieDatabase
-        popular_movies = list(db.Movies.find({"popularity": {"$gt": 0}}))
-        return popular_movies
-     
-    @staticmethod
-    def process_top_rated_movie_query():
-        # Connect to MongoDB and fetch top rated movies
-        client = MongoClient("mongodb://student:alfred@10.33.86.229:27017")
-        db = client.MovieDatabase
-        top_rated_movies = list(db.Movies.find({"vote_average": {"$gt": 7.5}}))
-        return top_rated_movies
-
-                            

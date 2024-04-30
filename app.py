@@ -1,5 +1,6 @@
 from flask import Flask, render_template
-from Tools import Tools  # Importing the entire Tools module
+from Classes.process_queries import *
+from Tools import *  # Importing the entire Tools module
 
 # Flask application
 app = Flask(__name__)
@@ -11,25 +12,26 @@ def hello():
     
 @app.route('/popular_movie_data')
 def get_popular_movie_data():
-    popular_movies = Tools.process_popular_movie_query()
+    process_popular_movies_query = ProcessPopularMovies()
+    context_popular_movies_query = Context(process_popular_movies_query)
+    popular_movies = context_popular_movies_query.process_query('popular_movies')
     return render_template('popular_movie_data.html', popular_movies=popular_movies)
 
 @app.route('/top_rated_movie_data')
 def get_top_rated_movie_data():
-    top_rated_movies = Tools.process_top_rated_movie_query()
+    process_top_rated_movies_query = ProcessTopRatedMovies()
+    context_top_rated_movies_query = Context(process_top_rated_movies_query)
+    top_rated_movies = context_top_rated_movies_query.process_query('top_rated_movies')
     return render_template('top_rated_movie_data.html', top_rated_movies=top_rated_movies)
 
 # Method to run the app in debug mode
 if __name__ == '__main__':
     app.run(debug=True)
-    
+
 #Movie data app routes
 #@app.route('/popular_movie_data')
 #def get_popular_movie_data():
-    #process_popular_movies_query = ProcessPopularMovies()
-    #context_popular_movies_query = Context(process_popular_movies_query)
 
-    #popular_movies = context_popular_movies_query.process_query('popular_movies')
     #return render_template('popular_movie_data.html', popular_movies = popular_movies)
 
 #@app.route('/top_rated_movie_data')
