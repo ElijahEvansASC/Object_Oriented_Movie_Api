@@ -47,37 +47,37 @@ class Facade:
 
     #This function gets the resulting json object and builds individual objects for each movie in that listing.
     #This function supports only one page of results, which should be fine for our search methods.
-    def create_movie_listing(json_object):
-        results = json_object.get("results", [])
-        for movie_data in results:  # Iterate over each movie dictionary
+    #def create_movie_listing(json_object):
+        #results = json_object.get("results", [])
+        #for movie_data in results:  # Iterate over each movie dictionary
             # Access individual keys and values
-            adult = movie_data.get('adult')
-            genre_ids = movie_data.get('genre_ids')
-            movie_id = movie_data.get('id')
-            title = movie_data.get('title')
-            overview = movie_data.get('overview')
-            vote_average = movie_data.get('vote_average')
-            vote_count = movie_data.get('vote_count')
-            release_date = movie_data.get('release_date')
+            #adult = movie_data.get('adult')
+            #genre_ids = movie_data.get('genre_ids')
+            #movie_id = movie_data.get('id')
+            #title = movie_data.get('title')
+            #overview = movie_data.get('overview')
+            #vote_average = movie_data.get('vote_average')
+            #vote_count = movie_data.get('vote_count')
+            #release_date = movie_data.get('release_date')
             # Create Movie object with individual attributes
-            movie = Movie(adult, genre_ids, movie_id, title, overview, vote_average, vote_count, release_date)
-            print(movie)#Printing movie for verification, can be deleted later.
+            #movie = Movie(adult, genre_ids, movie_id, title, overview, vote_average, vote_count, release_date)
+
     
-    def create_tvshow_listing(json_object):
-        results = json_object.get("results", [])
-        for tv_data in results:  # Iterate over each movie dictionary
+    #def create_tvshow_listing(json_object):
+        #results = json_object.get("results", [])
+        #for tv_data in results:  # Iterate over each movie dictionary
             # Access individual keys and values
-            adult = tv_data.get('adult')
-            genre_ids = tv_data.get('genre_ids')
-            movie_id = tv_data.get('id')
-            title = tv_data.get('title')
-            overview = tv_data.get('overview')
-            vote_average = tv_data.get('vote_average')
-            vote_count = tv_data.get('vote_count')
-            first_air_date = tv_data.get('first_air_date')
+            #adult = tv_data.get('adult')
+            #genre_ids = tv_data.get('genre_ids')
+            #movie_id = tv_data.get('id')
+            #title = tv_data.get('title')
+            #overview = tv_data.get('overview')
+            #vote_average = tv_data.get('vote_average')
+            #vote_count = tv_data.get('vote_count')
+            #first_air_date = tv_data.get('first_air_date')
             # Create TVShow object with individual attributes
-            tvshow = TVShow(adult, genre_ids, movie_id, title, overview, vote_average, vote_count, first_air_date)
-            print(tvshow)#Printing tvshow for verification, can be deleted later.
+            #tvshow = TVShow(adult, genre_ids, movie_id, title, overview, vote_average, vote_count, first_air_date)
+
 
   #====== Get movie methods ======
     def get_popular_movies(self):

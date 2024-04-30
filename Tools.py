@@ -1,8 +1,5 @@
 from Classes.media import *
 from Classes.create_and_query_endpoints import *
-import json
-
-facade = Facade(api_key='e41e13373c979e318ae4ca2804ec7e2a', base_url = 'https://api.themoviedb.org/3')
 
 class Tools:
      def create_movie_listing(json_object):
@@ -22,13 +19,4 @@ class Tools:
             movie_list.append(movie)
         return movie_list
 
-     def process_popular_movie_query():
-        tmdb_response_text = facade.get_popular_movies()
-        tmdb_response = json.loads(tmdb_response_text)
-        return Tools.create_movie_listing(tmdb_response)
-     
-     def process_top_rated_movie_query():
-        tmdb_response_text = facade.get_top_rated_movies()
-        tmdb_response = json.loads(tmdb_response_text)
-        return Tools.create_movie_listing(tmdb_response)
                             

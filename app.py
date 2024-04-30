@@ -1,4 +1,5 @@
 from Tools import *
+from Classes.process_queries import *
 from flask import Flask, render_template
 
 
@@ -17,12 +18,12 @@ def hello():
 #Movie data app routes
 @app.route('/popular_movie_data')
 def get_popular_movie_data():
-    popular_movies = Tools.process_popular_movie_query()
+    popular_movies = ProcessPopularMovies.process_popular_movies_query()
     return render_template('popular_movie_data.html', popular_movies = popular_movies)
 
 @app.route('/top_rated_movie_data')
 def get_top_rated_movie_data():
-    top_rated_movies = Tools.process_top_rated_movie_query()
+    top_rated_movies = ProcessTopRatedMovies.process_top_rated_movies_query()
     return render_template('top_rated_movie_data.html', top_rated_movies = top_rated_movies)
 
 
