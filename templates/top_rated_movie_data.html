@@ -5,10 +5,11 @@
     <title>Movie Data</title>
 </head>
 <body>
-    <ul>
-        {% for movie in movie_data %}
-            <li>{{ movie.title }}</li>
+        {% for movie in top_rated_movies %}
+            <p>{{ movie.title }}</p>
+            <p>{{ movie.genre_ids }}</p>
+            <p>{{ movie.overview}}</p>
+            <p>{{ movie.vote_average }}</p>
         {% endfor %}
-    </ul>
 </body>
 </html>

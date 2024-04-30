@@ -1,4 +1,4 @@
-from build_media import *
+from Classes.media import *
 import requests
 
 #====== Subroutine One: RunMediaQuery ======
@@ -134,9 +134,3 @@ class Facade:
 #
 #     search_term = "lord%20of%20the%20%rings"
 #     facade.get_movies_by_search(search_term)
-
-
-
-#New stuff for calling data from database
-#class CallDatabase:
-    #def __init__()

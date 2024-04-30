@@ -1,46 +1,35 @@
-from __future__ import annotations
-from Classes import gvars
-from flask import Flask, current_app, render_template, g
+from Tools import *
+from flask import Flask, render_template
 
 
 #To Run the Server:
 # 1.) Start debugging app.py
 # 2.) Navigate to http://127.0.0.1:5000 for the base URL
 
-
+#Flask application
 app = Flask(__name__)
-#Declaring gvars class to be passed around the program
-g_vars = gvars.GVars() 
-
-#Declaring database connection before request
-#g is a built in global variable import for Flask
-@app.before_request
-def before_request():
-    g.database = g_vars.connect_to_mongo_db()
-
-@app.teardown_request
-def teardown_request(exception):
-    database = getattr(g, 'database', None)
-    if database is not None:
-        database.client.close()
 
 #Base URL view app route
 @app.route('/')
 def hello():
     return 'Hello, World!'
     
-#Movie data app route
-@app.route('/movie_data')
-def get_movie_data():
-    database = getattr(g, 'database', None)
-    collection = database[g_vars.collection_name]
-    movie_data = collection.find()
-    return render_template('movie_data.html', movie_date = movie_data)
+#Movie data app routes
+@app.route('/popular_movie_data')
+def get_popular_movie_data():
+    popular_movies = Tools.process_popular_movie_query()
+    return render_template('popular_movie_data.html', popular_movies = popular_movies)
+
+@app.route('/top_rated_movie_data')
+def get_top_rated_movie_data():
+    top_rated_movies = Tools.process_top_rated_movie_query()
+    return render_template('top_rated_movie_data.html', top_rated_movies = top_rated_movies)
 
 
 #Method to run the app in debug mode
 if __name__ == '__main__':
     app.run(debug=True)
+    
 '''''''''
 #TVShows = facade method to get connection string
 #Movies = Facade method to get connection string
