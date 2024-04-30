@@ -22,13 +22,13 @@ class Context():
  
         self._strategy = strategy
 
-    #def process_query(self, string: str, process: str) -> str:
-        #if process == 'popular_movies':
-            #return self._strategy.process_popular_movies_query(string)
-        #elif process == 'top_rated_movies':
-            #return self._strategy.process_top_rated_movies_query(string)
-        #elif process == 'search_movies':
-            #return self._strategy.process_search_movies_query(string)
+    def process_query(self, process: str):
+        if process == 'popular_movies':
+            return self._strategy.process_popular_movies_query()
+        elif process == 'top_rated_movies':
+            return self._strategy.process_top_rated_movies_query()
+        elif process == 'search_movies':
+            return self._strategy.process_search_movies_query()
 
 
 #Strategy pattern methods, each function declares an abstract method.
