@@ -75,8 +75,11 @@ class ProcessTopRatedMovies(Strategy):
     
 class ProcessSearchMovies(Strategy):
     def process_search_movies_query(self):
-        #Code here
-        print("Awaiting implementation.")
+        #Returns all movies
+        client = MongoClient("mongodb://student:alfred@10.33.86.229:27017")
+        db = client.MovieDatabase
+        search_movies = list(db.Movies.find({}))
+        return search_movies
 
     def process_popular_movies_query(self):
         pass

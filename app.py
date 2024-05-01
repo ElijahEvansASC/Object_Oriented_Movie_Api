@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
 from Classes.process_queries import *
 from Tools import *  # Importing the entire Tools module
 
@@ -23,6 +23,25 @@ def get_top_rated_movie_data():
     context_top_rated_movies_query = Context(process_top_rated_movies_query)
     top_rated_movies = context_top_rated_movies_query.process_query('top_rated_movies')
     return render_template('top_rated_movie_data.html', top_rated_movies=top_rated_movies)
+
+@app.route('/movies')
+def get_search_movies():
+    search_term = request.args.get('search')
+
+    if not search_term:
+        return jsonify({"Error, no search term provided."})
+
+    search_results = []
+
+    process_search_movies_query = ProcessSearchMovies()
+    context_search_movies_query = Context(process_search_movies_query)
+    search_movies = context_search_movies_query.process_query('search_movies')
+
+    for movie in search_movies:
+        if search_term.lower() in movie['title'].lower():
+            search_results.append(movie)
+            
+    return render_template('search_movie_data.html', search_results = search_results)
 
 # Method to run the app in debug mode
 if __name__ == '__main__':
