@@ -78,7 +78,7 @@ class ProcessSearchMovies(Strategy):
         #Returns all movies
         client = MongoClient("mongodb://student:alfred@10.33.86.229:27017")
         db = client.MovieDatabase
-        search_movies = list(db.Movies.find({}))
+        search_movies:list = list(db.Movies.find().sort('title', -1))
         return search_movies
 
     def process_popular_movies_query(self):

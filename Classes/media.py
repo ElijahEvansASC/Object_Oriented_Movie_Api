@@ -18,46 +18,16 @@ class Media(ABC):
         self.vote_average = vote_average
         self.vote_count = vote_count
 
-    @property
-    @abstractmethod
-    def Media(self) -> None:
-        pass
-
-    @abstractmethod
-    def produce_rating(self) -> None:
-        pass
-    
-    @abstractmethod
-    def produce_genre_ids(self) -> None:
-        pass
-    
-    @abstractmethod
-    def produce_id(self) -> None:
-        pass
-
-    @abstractmethod
-    def produce_title(self) -> None:
-        pass
-
-    @abstractmethod
-    def produce_overview(self) -> None:
-        pass
-
-    @abstractmethod
-    def produce_vote_average(self) -> None:
-        pass
-
-    @abstractmethod
-    def produce_vote_count(self) -> None:
+    def produce_details(self) -> dict:
         pass
 
 #========== MovieBuilder Class ==========
 class MovieBuilder(Builder):
     def __init__(self) -> None:
         self.reset()
-
-    def reset(self) -> None:
-        self._movie = Movie()
+    #Work here
+    def reset(self, adult = False ,genre_ids = [], id = 0, title = "", overview = "", vote_average = 0, vote_count = 0, release_date = "") -> None:
+        self._movie = Movie(adult, genre_ids, id, title, overview, vote_average, vote_count, release_date)
 
     @property
     def movie(self) -> 'Movie':
@@ -65,31 +35,21 @@ class MovieBuilder(Builder):
         self.reset()
         return movie
 
-    def produce_movie_details(self, movie: 'Movie') -> None:
+    def produce_details(self) -> dict:
 
-        movie_details = {
-            "title": movie.title,
-            "genre_ids": movie.overview,
-            "overview": movie.vote_average
+        return {
+            "title": self._movie.title,
+            "overview": self._movie.overview,
+            "vote_average": self._movie.vote_average
         }
-        self._movie.append(movie_details)
-    
-    def produce_extended_movie_details(self, movie: 'Movie') -> None:
-
-        movie_details = {
-            "title": movie.title,
-            "genre_ids": movie.overview,
-            "overview": movie.vote_average
-        }
-
-        self._movie.append(movie_details)
 
 #========== TVShow Builder Class ==========
 class TVShowBuilder(Builder):
     def __init__(self) -> None:
         self.reset()
 
-    def reset(self) -> None:
+    def reset(self, adult = False ,genre_ids = [], id = 0, title = "", overview = "", vote_average = 0, vote_count = 0, first_air_date = "") -> None:
+        self._tvshow = TVShow(adult, genre_ids, id, title, overview, vote_average, vote_count, first_air_date)
         self._tvshow = TVShow()
 
     @property
@@ -98,24 +58,13 @@ class TVShowBuilder(Builder):
         self.reset()
         return tvshow
 
-    def produce_tvshow_details(self, tvshow: 'TVShow') -> None:
+    def produce_details(self) -> dict:
 
-        tvshow_details = {
-            "title": tvshow.title,
-            "genre_ids": tvshow.overview,
-            "overview": tvshow.vote_average
+        return {
+            "title": self._tvshow.title,
+            "overview": self._tvshow.overview,
+            "vote_average": self._tvshow.vote_average
         }
-        self._tvshow.append(tvshow_details)
-    
-    def produce_extended_tvshow_details(self, tvshow: 'TVShow') -> None:
-
-        tvshow_details = {
-            "title": tvshow.title,
-            "genre_ids": tvshow.overview,
-            "overview": tvshow.vote_average
-        }
-
-        self._tvshow.append(tvshow_details)
 
 
 #========== Movie Class inheriting from Media Class ==========
@@ -127,29 +76,12 @@ class Movie(Media):
         #Initializes unique variable to Movie Class
         self.release_date = release_date
 
-    def Media(self) -> None:
-        pass
-
-    def produce_rating(self) -> None:
-        pass
-    
-    def produce_genre_ids(self) -> None:
-        pass
-    
-    def produce_id(self) -> None:
-        pass
-
-    def produce_title(self) -> None:
-        pass
-
-    def produce_overview(self) -> None:
-        pass
-
-    def produce_vote_average(self) -> None:
-        pass
-
-    def produce_vote_count(self) -> None:
-        pass
+    def produce_details(self) -> dict:
+            return {
+            "title": self.title,
+            "overview": self.overview,
+            "vote_average": self.vote_average
+        }
 
 #========== TVShow Class inheriting from Media class ==========
 class TVShow(Media):
@@ -159,66 +91,12 @@ class TVShow(Media):
 
         #Initializes unique variable to Movie Class
         self.first_air_date = first_air_date
+
+    def produce_details(self) -> dict:
+            return {
+            "title": self.title,
+            "overview": self.overview,
+            "vote_average": self.vote_average
+        }    
     
-    def Media(self) -> None:
-        pass
 
-    def produce_rating(self) -> None:
-        pass
-    
-    def produce_genre_ids(self) -> None:
-        pass
-    
-    def produce_id(self) -> None:
-        pass
-
-    def produce_title(self) -> None:
-        pass
-
-    def produce_overview(self) -> None:
-        pass
-
-    def produce_vote_average(self) -> None:
-        pass
-
-    def produce_vote_count(self) -> None:
-        pass
-
-#========== Director Class ==========
-#Optional director class, initializes builder instances so client code can alter type of assembled Media
-class Director:
-    def __init__(self) -> None:
-        self._movie_builder = None
-        self._tvshow_builder = None
-
-    @property
-    def movie_builder(self) -> MovieBuilder:
-        return self._movie_builder
-    
-    @property
-    def tvshow_builder(self) -> TVShowBuilder:
-        return self._movie_builder
-
-    @movie_builder.setter
-    def movie_builder(self, movie_builder: MovieBuilder) -> None:
-        self._movie_builder = movie_builder
-    
-    @tvshow_builder.setter
-    def tvshow_builder(self, tvshow_builder: TVShowBuilder) -> None:
-        self._tvshow_builder = tvshow_builder
-
-    #Basic movie listing(title, genre_ids key value, overview)
-    def build_basic_movie_listing(self) -> None:
-        self.movie_builder.produce_movie_details()
-    
-    #Extended movie listing (all properties and values)
-    def build_basic_tvshow_listing(self) -> None:
-        self.tvshow_builder.produce_tvshow_details()
-
-    def build_extended_movie_listing(self) -> None:
-        self.movie_builder.produce_movie_details()
-        self.movie_builder.produce_extended_movie_details()
-    
-    def build_extended_tvshow_listing(self) -> None:
-        self.tvshow_builder.produce_movie_details()
-        self.tvshow_builder.produce_extended_movie_details()
