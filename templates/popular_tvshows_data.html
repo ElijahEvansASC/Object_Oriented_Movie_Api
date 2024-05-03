@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TvShow Data</title>
+</head>
+<body>
+        {% for tvshow in built_popular_tvshows %}
+            <p>Title:{{ movie.title }}</p>
+            <p>First Air Date:{{ tvshow.first_air_date}}</p>
+            <p>Genre Id's:{{ tvshow.genre_ids }}</p>
+            <p>Overview:{{ tvshow.overview}}</p>
+            <p>Popularity:{{ tvshow.popularity}}</p>
+            <p>Vote Average:{{ tvshow.vote_average }}</p>
+            <p>Vote Count:{{ tvshow.vote_count}}</p>
+            <p>Adult:{{ tvshow.adult}}</p>
+        {% endfor %}
+</body>
+</html>

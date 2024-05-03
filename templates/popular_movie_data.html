@@ -4,12 +4,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Data</title>
 </head>
-<body>
+<body>  
         {% for movie in built_popular_movies %}
-            <p>{{ movie.title }}</p>
-            <p>{{ movie.genre_ids }}</p>
-            <p>{{ movie.overview}}</p>
-            <p>{{ movie.vote_average }}</p>
+            <p>Title:{{ movie.title }}</p>
+            <p>Release Date:{{ movie.release_date}}</p>
+            <p>Genre Id's:{{ movie.genre_ids }}</p>
+            <p>Overview:{{ movie.overview}}</p>
+            <p>Popularity:{{movie.popularity}}</p>
+            <p>Vote Average:{{ movie.vote_average }}</p>
+            <p>Vote Count:{{ movie.vote_count}}</p>
+            <p>Adult:{{ movie.adult}}</p>
         {% endfor %}
 </body>
 </html>

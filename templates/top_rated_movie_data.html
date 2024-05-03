@@ -6,10 +6,14 @@
 </head>
 <body>
         {% for movie in built_top_rated_movies %}
-            <p>{{ movie.title }}</p>
-            <p>{{ movie.genre_ids }}</p>
-            <p>{{ movie.overview}}</p>
-            <p>{{ movie.vote_average }}</p>
+            <p>Title:{{ movie.title }}</p>
+            <p>Release Date:{{ movie.release_date}}</p>
+            <p>Genre Id's:{{ movie.genre_ids }}</p>
+            <p>Overview:{{ movie.overview}}</p>
+            <p>Popularity:{{movie.popularity}}</p>
+            <p>Vote Average:{{ movie.vote_average }}</p>
+            <p>Vote Count:{{ movie.vote_count}}</p>
+            <p>Adult:{{ movie.adult}}</p>
         {% endfor %}
 </body>
 </html>
